@@ -19,7 +19,7 @@ function setup() {
 
     /* 
     
-    MAIN IDEA IS THAT WHEN PEOPLE TAKE PICTURE IT WILL ADD TO A CLASS AND THEN WE TRAIN THE PICTURE WHERE IT DIFFERENCIATE WHICH ONE IS WHICH AND THEN WE GET THE RESULTS
+    MAIN IDEA IS THAT WHEN PEOPLE TAKE PICTURE IT WILL ADD TO A CLASS AND THEN WE TRAIN THE PICTURE WHERE IT DIFFERENCIATE WHICH ONE IS WHICH AND THEN WE GET THE RESULTS. (GO THROUGH THE PROCESS OF THIS BY FINDING (ONE,TWO,THREE AND ETC))
     
     */
     
@@ -29,7 +29,8 @@ function setup() {
     // CREATE A CAPTURE
     video = createCapture(VIDEO);
 
-    // Extract the already learned features from MobileNet
+    // ONE
+    // Extract the already learned features from MobileNet (MAKE SURE THAT THE MODEL IS READY!)
     mobilenet = ml5.featureExtractor('MobileNet', () => {
         console.log('Model Ready!!!')
     });
@@ -37,12 +38,14 @@ function setup() {
     // EXPLICITLY TELL HOW MANY CLASSES WE ARE USING
     mobilenet.numClasses = 4
 
-    // Create a new classifier using those features and give the video we want to use
+    // TWO
+    // Create a new classifier using those features and give the video we want to use (AND TELL WHEN THE VIDEO IS READY)
     classifier = mobilenet.classification(video, () => {
         console.log('Video Ready!!!')
     });
 
-    // SET UP BUTTONS (CALL IT)
+    // 3
+    // SET UP BUTTONS (CALL IT) (and also configure the classes)
     setupButtons();
 
     // DEFAULT COUNTER
@@ -58,17 +61,16 @@ function setup() {
 
     // VIDEO SIZE
     video.size(200, 200)
-
+    
 }
 
 function draw() {
-
     background(0)
-    ellipse(ex, ey, es)
 }
 
-function setupButtons() {
 
+function setupButtons() {
+    // FOUR
     // CREATE BUTTON AND IF IT IS PRESSED, ADD THE IMAGE (WHICH IS THE VIDEO) TO THE CLASSIFIER
     upbutton = createButton('up')
     upbutton.mousePressed(() => {
@@ -107,6 +109,7 @@ function setupButtons() {
 
     })
 
+    // FIVE
     // TRAIN FROM THE PICTURES COLLECTED
     trainbutton = createButton('Train')
     trainbutton.mousePressed(() => {
@@ -118,6 +121,7 @@ function setupButtons() {
 
 }
 
+// SIX
 function whileTraining(loss) {
 
     // AFTER THE TRAINING, IT WILL CONSOLE LOG NULL, MEANING THAT NULL = DONE TRAINING
@@ -130,29 +134,11 @@ function whileTraining(loss) {
     }
 }
 
+// SEVEN
 function gotResults(error, results) {
 
-    // RESULTS IS HERE
-    endresults = results
     classifier.classify(gotResults)
-
-    // CASE THE END RESULTS (FOR THE GAME)
-    switch (endresults) {
-        case 'up':
-            ey -= 1;
-            break;
-
-        case 'right':
-            ex += 1;
-            break;
-
-        case 'left':
-            ex -= 1;
-            break;
-
-        case 'down':
-            ey += 1;
-            break;
-    }
-
+    
+    // RESULTS IS HERE
+    console.log(results)
 }
