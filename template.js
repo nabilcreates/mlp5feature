@@ -9,20 +9,11 @@ let leftbutton;
 let downbutton;
 let trainbutton;
 
+// TRACK HOW MANY PICTURES IS TAKEN (BY INCREMENTING EVERYTIME THE BUTTON IS PRESSED)
 let upbuttonpressed;
 let rightbuttonpressed;
 let leftbuttonpressed;
 let downbuttonpressed;
-
-let endresults;
-
-let upSelect;
-let rightSelect;
-let leftSelect;
-let downSelect;
-
-let trainstatus;
-let trainingstat;
 
 function setup() {
 
@@ -68,27 +59,12 @@ function setup() {
     // VIDEO SIZE
     video.size(200, 200)
 
-    upSelect = select(".upSelect")
-    rightSelect = select(".rightSelect")
-    leftSelect = select(".leftSelect")
-    downSelect = select(".downSelect")
-
-    trainstatus = select('.trainstatus')
-    trainingstat = 'Not yet trained!'
 }
 
 function draw() {
 
     background(0)
     ellipse(ex, ey, es)
-
-    upSelect.html('Number of pics taken (up): ' + upbuttonpressed)
-    rightSelect.html('Number of pics taken (right): ' + rightbuttonpressed)
-    leftSelect.html('Number of pics taken (left): ' + leftbuttonpressed)
-    downSelect.html('Number of pics taken (down): ' + downbuttonpressed)
-    trainstatus.html(trainingstat)
-
-
 }
 
 function setupButtons() {
@@ -147,8 +123,6 @@ function whileTraining(loss) {
     // AFTER THE TRAINING, IT WILL CONSOLE LOG NULL, MEANING THAT NULL = DONE TRAINING
     if (loss == null) {
         console.log('Done training!')
-        trainingstat = 'DONE TRAINING!'
-
         // CLASSIFY FROM THE TRAINING AND CALL THE GOT RESULTS
         classifier.classify(gotResults)
     } else {
@@ -161,8 +135,6 @@ function gotResults(error, results) {
     // RESULTS IS HERE
     endresults = results
     classifier.classify(gotResults)
-
-    console.log(endresults)
 
     // CASE THE END RESULTS (FOR THE GAME)
     switch (endresults) {
