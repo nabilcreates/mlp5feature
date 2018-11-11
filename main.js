@@ -25,9 +25,13 @@ let trainstatus;
 let trainingstat;
 
 function setup() {
+
+    // CREATE CANVAS
     createCanvas(500, 500)
 
+    // CREATE A CAPTURE
     video = createCapture(VIDEO);
+
     // Extract the already learned features from MobileNet
     mobilenet = ml5.featureExtractor('MobileNet', () => {
         console.log('Model Ready!!!')
@@ -41,8 +45,7 @@ function setup() {
         console.log('Video Ready!!!')
     });
 
-    video.show()
-
+    // SET UP BUTTONS (CALL IT)
     setupButtons();
 
     // DEFAULT COUNTER
@@ -125,6 +128,8 @@ function setupButtons() {
     // TRAIN FROM THE PICTURES COLLECTED
     trainbutton = createButton('Train')
     trainbutton.mousePressed(() => {
+
+        // ASK THE CLASSIFIER TO TRAIN AND CALL WHILETRAINING WHILE ITS DOING IT
         classifier.train(whileTraining)
     })
 
@@ -138,7 +143,7 @@ function whileTraining(loss) {
         console.log('Done training!')
         trainingstat = 'DONE TRAINING!'
 
-        // CLASSIFY FROM THE TRAINING
+        // CLASSIFY FROM THE TRAINING AND CALL THE GOT RESULTS
         classifier.classify(gotResults)
     } else {
         console.log(loss)
@@ -153,6 +158,7 @@ function gotResults(error, results) {
 
     console.log(endresults)
 
+    // CASE THE END RESULTS (FOR THE GAME)
     switch (endresults) {
         case 'up':
             ey -= 1;
