@@ -18,11 +18,6 @@ let pausebuttonpressed;
 
 let endresults;
 
-let upSelect;
-let rightSelect;
-let leftSelect;
-let downSelect;
-
 let trainstatus;
 let trainingstat;
 
@@ -114,7 +109,7 @@ function draw() {
     trainstatus.html(trainingstat)
 
     posx.html(ex)
-    posy.html(ey)
+    posy.html(ex)
 
 
 }
@@ -131,14 +126,14 @@ function setupButtons() {
     })
 
     // CREATE BUTTON AND IF IT IS PRESSED, ADD THE IMAGE (WHICH IS THE VIDEO) TO THE CLASSIFIER
-    rightbutton = createButton('right')
-    rightbutton.mousePressed(() => {
-        classifier.addImage('right')
+    downbutton = createButton('down')
+    downbutton.mousePressed(() => {
+        classifier.addImage('down')
 
-        takenPicsRight++
-        console.log(takenPicsRight)
+        takenPicsDown++
+        console.log(takenPicsDown)
+
     })
-
     // CREATE BUTTON AND IF IT IS PRESSED, ADD THE IMAGE (WHICH IS THE VIDEO) TO THE CLASSIFIER
     leftbutton = createButton('left')
     leftbutton.mousePressed(() => {
@@ -148,16 +143,16 @@ function setupButtons() {
         console.log(takenPicsLeft)
 
     })
-
     // CREATE BUTTON AND IF IT IS PRESSED, ADD THE IMAGE (WHICH IS THE VIDEO) TO THE CLASSIFIER
-    downbutton = createButton('down')
-    downbutton.mousePressed(() => {
-        classifier.addImage('down')
+    rightbutton = createButton('right')
+    rightbutton.mousePressed(() => {
+        classifier.addImage('right')
 
-        takenPicsDown++
-        console.log(takenPicsDown)
-
+        takenPicsRight++
+        console.log(takenPicsRight)
     })
+
+
 
     // CREATE BUTTON AND IF IT IS PRESSED, ADD THE IMAGE (WHICH IS THE VIDEO) TO THE CLASSIFIER
     pausebutton = createButton('pause')
