@@ -87,6 +87,16 @@ function draw() {
     background(0)
     ellipse(ex, ey, es)
 
+    if(ex >= width || ex <= 0){
+        ex = random(width)
+        ey = random(height)
+    }
+
+    if(ey >= height || ey <= 0){
+        ex = random(width)
+        ey = random(height)
+    }
+    
     upSelect.html('Number of pics taken (up): ' + upbuttonpressed)
     rightSelect.html('Number of pics taken (right): ' + rightbuttonpressed)
     leftSelect.html('Number of pics taken (left): ' + leftbuttonpressed)
