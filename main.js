@@ -148,6 +148,9 @@ function setupButtons() {
 
 function whileTraining(loss) {
 
+    // HIDES THE VIDEO
+    video.hide()
+
     // AFTER THE TRAINING, IT WILL CONSOLE LOG NULL, MEANING THAT NULL = DONE TRAINING
     if (loss == null) {
         console.log('Done training!')
