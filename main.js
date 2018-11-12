@@ -7,12 +7,14 @@ let upbutton;
 let rightbutton;
 let leftbutton;
 let downbutton;
+let pausebutton;
 let trainbutton;
 
 let upbuttonpressed;
 let rightbuttonpressed;
 let leftbuttonpressed;
 let downbuttonpressed;
+let pausebuttonpressed;
 
 let endresults;
 
@@ -33,12 +35,12 @@ function setup() {
     MAIN IDEA IS THAT WHEN PEOPLE TAKE PICTURE IT WILL ADD TO A CLASS AND THEN WE TRAIN THE PICTURE WHERE IT DIFFERENCIATE WHICH ONE IS WHICH AND THEN WE GET THE RESULTS
     
     */
-   
-   // CREATE CANVAS
-   createCanvas(500, 500)
-   
-   // CREATE A CAPTURE
-   video = createCapture(VIDEO);
+
+    // CREATE CANVAS
+    createCanvas(500, 500)
+
+    // CREATE A CAPTURE
+    video = createCapture(VIDEO);
 
     // Extract the already learned features from MobileNet
     mobilenet = ml5.featureExtractor('MobileNet', () => {
@@ -46,7 +48,7 @@ function setup() {
     });
 
     // EXPLICITLY TELL HOW MANY CLASSES WE ARE USING
-    mobilenet.numClasses = 4
+    mobilenet.numClasses = 5
 
     // Create a new classifier using those features and give the video we want to use
     classifier = mobilenet.classification(video, () => {
@@ -61,6 +63,7 @@ function setup() {
     leftbuttonpressed = 0;
     upbuttonpressed = 0;
     downbuttonpressed = 0;
+    pausebuttonpressed = 0;
 
     // STARTING POINT AND SCALE OF THE ELLIPSE
     ex = random(width);
@@ -133,6 +136,16 @@ function setupButtons() {
 
     })
 
+    // CREATE BUTTON AND IF IT IS PRESSED, ADD THE IMAGE (WHICH IS THE VIDEO) TO THE CLASSIFIER
+    pausebutton = createButton('pause')
+    pausebutton.mousePressed(() => {
+        classifier.addImage('pause')
+
+        pausebuttonpressed++
+        console.log(pausebuttonpressed)
+
+    })
+
     // TRAIN FROM THE PICTURES COLLECTED
     trainbutton = createButton('Train')
     trainbutton.mousePressed(() => {
@@ -174,19 +187,27 @@ function gotResults(error, results) {
     // CASE THE END RESULTS (FOR THE GAME)
     switch (endresults) {
         case 'up':
+            speed = 5
             ey -= speed;
             break;
 
         case 'right':
+            speed = 5
             ex += speed;
             break;
 
         case 'left':
+            speed = 5
             ex -= speed;
             break;
 
         case 'down':
+            speed = 5
             ey += speed;
+            break;
+
+        case 'pause':
+            speed = 0
             break;
     }
 
