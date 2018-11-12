@@ -10,10 +10,10 @@ let downbutton;
 let pausebutton;
 let trainbutton;
 
-let upbuttonpressed;
-let rightbuttonpressed;
-let leftbuttonpressed;
-let downbuttonpressed;
+let takenPicsUp;
+let takenPicsRight;
+let takenPicsLeft;
+let takenPicsDown;
 let pausebuttonpressed;
 
 let endresults;
@@ -28,6 +28,13 @@ let trainingstat;
 
 let speed = 5;
 
+let picsup;
+let picsdown;
+let picsleft;
+let picsright;
+
+let posx;
+let posy;
 function setup() {
 
     /* 
@@ -59,10 +66,10 @@ function setup() {
     setupButtons();
 
     // DEFAULT COUNTER
-    rightbuttonpressed = 0;
-    leftbuttonpressed = 0;
-    upbuttonpressed = 0;
-    downbuttonpressed = 0;
+    takenPicsRight = 0;
+    takenPicsLeft = 0;
+    takenPicsUp = 0;
+    takenPicsDown = 0;
     pausebuttonpressed = 0;
 
     // STARTING POINT AND SCALE OF THE ELLIPSE
@@ -73,12 +80,15 @@ function setup() {
     // VIDEO SIZE
     video.size(200, 200)
 
-    upSelect = select(".upSelect")
-    rightSelect = select(".rightSelect")
-    leftSelect = select(".leftSelect")
-    downSelect = select(".downSelect")
+    picsup = select(".pics-up")
+    picsdown = select(".pics-down")
+    picsleft = select(".pics-left")
+    picsright = select(".pics-right")
+    trainstatus = select(".train-status")
 
-    trainstatus = select('.trainstatus')
+    posx = select('.posx')
+    posy = select('.posy')
+    
     trainingstat = 'Not yet trained!'
 }
 
@@ -97,11 +107,14 @@ function draw() {
         ey = random(height)
     }
     
-    upSelect.html('Number of pics taken (up): ' + upbuttonpressed)
-    rightSelect.html('Number of pics taken (right): ' + rightbuttonpressed)
-    leftSelect.html('Number of pics taken (left): ' + leftbuttonpressed)
-    downSelect.html('Number of pics taken (down): ' + downbuttonpressed)
+    picsup.html(takenPicsUp)
+    picsdown.html(takenPicsDown)
+    picsleft.html(takenPicsLeft)
+    picsright.html(takenPicsRight)
     trainstatus.html(trainingstat)
+
+    posx.html(ex)
+    posy.html(ey)
 
 
 }
@@ -113,8 +126,8 @@ function setupButtons() {
     upbutton.mousePressed(() => {
         classifier.addImage('up')
 
-        upbuttonpressed++
-        console.log(upbuttonpressed)
+        takenPicsUp++
+        console.log(takenPicsUp)
     })
 
     // CREATE BUTTON AND IF IT IS PRESSED, ADD THE IMAGE (WHICH IS THE VIDEO) TO THE CLASSIFIER
@@ -122,8 +135,8 @@ function setupButtons() {
     rightbutton.mousePressed(() => {
         classifier.addImage('right')
 
-        rightbuttonpressed++
-        console.log(rightbuttonpressed)
+        takenPicsRight++
+        console.log(takenPicsRight)
     })
 
     // CREATE BUTTON AND IF IT IS PRESSED, ADD THE IMAGE (WHICH IS THE VIDEO) TO THE CLASSIFIER
@@ -131,8 +144,8 @@ function setupButtons() {
     leftbutton.mousePressed(() => {
         classifier.addImage('left')
 
-        leftbuttonpressed++
-        console.log(leftbuttonpressed)
+        takenPicsLeft++
+        console.log(takenPicsLeft)
 
     })
 
@@ -141,8 +154,8 @@ function setupButtons() {
     downbutton.mousePressed(() => {
         classifier.addImage('down')
 
-        downbuttonpressed++
-        console.log(downbuttonpressed)
+        takenPicsDown++
+        console.log(takenPicsDown)
 
     })
 
@@ -176,9 +189,9 @@ function whileTraining(loss) {
 
     // AFTER THE TRAINING, IT WILL CONSOLE LOG NULL, MEANING THAT NULL = DONE TRAINING
     if (loss == null) {
-        console.log('Done training!')
-        trainingstat = 'DONE TRAINING!'
 
+        trainingstat = 'DONE TRAINING!'
+        
         // CLASSIFY FROM THE TRAINING AND CALL THE GOT RESULTS
         classifier.classify(gotResults)
     } else {
