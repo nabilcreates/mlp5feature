@@ -10,6 +10,8 @@ let downbutton;
 let pausebutton;
 let trainbutton;
 
+let resultstatus;
+
 let takenPicsUp;
 let takenPicsRight;
 let takenPicsLeft;
@@ -80,6 +82,8 @@ function setup() {
     picsleft = select(".pics-left")
     picsright = select(".pics-right")
     trainstatus = select(".train-status")
+
+    resultstatus = select(".result-status")
 
     posx = select('.posx')
     posy = select('.posy')
@@ -197,7 +201,7 @@ function gotResults(error, results) {
     endresults = results
     classifier.classify(gotResults)
 
-    console.log(endresults)
+    resultstatus.html(endresults)
 
     // CASE THE END RESULTS (FOR THE GAME)
     switch (endresults) {
