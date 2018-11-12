@@ -24,6 +24,8 @@ let downSelect;
 let trainstatus;
 let trainingstat;
 
+let speed = 5;
+
 function setup() {
 
     /* 
@@ -31,12 +33,12 @@ function setup() {
     MAIN IDEA IS THAT WHEN PEOPLE TAKE PICTURE IT WILL ADD TO A CLASS AND THEN WE TRAIN THE PICTURE WHERE IT DIFFERENCIATE WHICH ONE IS WHICH AND THEN WE GET THE RESULTS
     
     */
-    
-    // CREATE CANVAS
-    createCanvas(500, 500)
-
-    // CREATE A CAPTURE
-    video = createCapture(VIDEO);
+   
+   // CREATE CANVAS
+   createCanvas(500, 500)
+   
+   // CREATE A CAPTURE
+   video = createCapture(VIDEO);
 
     // Extract the already learned features from MobileNet
     mobilenet = ml5.featureExtractor('MobileNet', () => {
@@ -61,8 +63,8 @@ function setup() {
     downbuttonpressed = 0;
 
     // STARTING POINT AND SCALE OF THE ELLIPSE
-    ex = 100;
-    ey = 100;
+    ex = random(width);
+    ey = random(width);
     es = 20;
 
     // VIDEO SIZE
@@ -135,6 +137,8 @@ function setupButtons() {
     trainbutton = createButton('Train')
     trainbutton.mousePressed(() => {
 
+        trainingstat = 'Training...'
+
         // ASK THE CLASSIFIER TO TRAIN AND CALL WHILETRAINING WHILE ITS DOING IT
         classifier.train(whileTraining)
     })
@@ -167,19 +171,19 @@ function gotResults(error, results) {
     // CASE THE END RESULTS (FOR THE GAME)
     switch (endresults) {
         case 'up':
-            ey -= 1;
+            ey -= speed;
             break;
 
         case 'right':
-            ex += 1;
+            ex += speed;
             break;
 
         case 'left':
-            ex -= 1;
+            ex -= speed;
             break;
 
         case 'down':
-            ey += 1;
+            ey += speed;
             break;
     }
 
